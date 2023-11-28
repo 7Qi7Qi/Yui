@@ -1,0 +1,56 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat"><html lang="en-US" data-colors-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8">  <meta name="built-on" content="2023-11-28T23:26:37.782722"><meta name="build-number" content="${buildNumber}">       <title>常用系统表 | Yui</title><script id="virtual-toc-data" type="application/json">[]</script><script id="topic-shortcuts" type="application/json"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.1.5-b176/app.css" rel="stylesheet">   <link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><link rel="manifest" href="https://jetbrains.com/site.webmanifest"><link rel="mask-icon" href="https://jetbrains.com/safari-pinned-tab.svg" color="#000000"><meta name="msapplication-TileColor" content="#000000"/><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"/><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"/><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"/><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"/><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"/>  <meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="常用系统表 | Yui"/><meta property="og:description" content=""/><meta property="og:image" content=""/><meta property="og:site_name" content="Yui Help"/><meta property="og:type" content="website"/><meta property="og:locale" content="en_US"/><meta property="og:url" content="pgsystemtable.html"/><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="常用系统表 | Yui"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json"> { "@context": "http://schema.org", "@type": "WebPage", "@id": "pgsystemtable.html#webpage", "url": "pgsystemtable.html", "name": "常用系统表 | Yui", "description": "", "image": "", "inLanguage":"en-US" }</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json"> { "@type": "WebSite", "@id": "/#website", "url": "/", "name": "Yui Help" }</script><!-- End Schema.org --> <!-- Mermaid light/dark themes -->  <link rel="stylesheet" type="text/css" href="mermaid.css">  </head>     <body data-id="PGSystemTable" data-main-title="常用系统表" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}"  data-template="article"  data-breadcrumbs="sql"  >   <div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Yui  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="PGSystemTable"  id="PGSystemTable.md"  >常用系统表</h1>  <p id="addceb38_72">关于postgresql系统表，可以参考<a href="http://www.php100.com/manual/PostgreSQL8/catalogs.html" id="addceb38_73"   data-external="true" rel="noopener noreferrer" >PostgreSQL 8.1 中文文档-系统表</a>。</p><p id="addceb38_74"><span class="control" id="addceb38_75">pg_class</span></p><p id="addceb38_76">记录了数据库中的表，索引，序列，视图（&quot;关系&quot;）。</p><p id="addceb38_77">其中比较重要字段有：</p><ul class="list _ul" id="addceb38_78"    ><li class="list__item" id="addceb38_79"><p>relname 表，索引，视图等的名字。</p></li><li class="list__item" id="addceb38_80"><p>relnamespace 包含这个关系的名字空间（模式）的 OID，对应pg_namespace.oid</p></li><li class="list__item" id="addceb38_81"><p>relkind r = 普通表，i = 索引，S = 序列，v = 视图， c = 复合类型，s = 特殊，t = TOAST表</p></li></ul><p id="addceb38_82"><span class="control" id="addceb38_83">pg_namespace</span></p><p id="addceb38_84">记录了数据库的名字空间（模式）</p><p id="addceb38_85">其中比较重要的字段有：</p><ul class="list _ul" id="addceb38_86"    ><li class="list__item" id="addceb38_87"><p>nspname 名字空间的名字</p></li><li class="list__item" id="addceb38_88"><p>nspowner 名字空间的所有者</p></li></ul><p id="addceb38_89"><span class="control" id="addceb38_90">pg_attribute</span></p><p id="addceb38_91">记录了数据库关于表的字段的信息。</p><p id="addceb38_92">其中比较重要的字段有：</p><ul class="list _ul" id="addceb38_93"    ><li class="list__item" id="addceb38_94"><p>attrelid 此列/字段所属的表，对应于pg_class.oid</p></li><li class="list__item" id="addceb38_95"><p>attname 字段名字</p></li><li class="list__item" id="addceb38_96"><p>atttypid 这个字段的数据类型,对应于pg_type.oid</p></li><li class="list__item" id="addceb38_97"><p>attlen 对于定长类型，typlen是该类型内部表现形式的字节数目。 对于变长类型，typlen 是负数。 -1 表示一种&quot;变长&quot;类型（有长度字属性的数据）， -2 表示这是一个 NULL 结尾的 C 字串。是本字段类型 pg_type.typlen 的拷贝。</p></li><li class="list__item" id="addceb38_98"><p>attnum 字段数目。普通字段是从 1 开始计数的。系统字段， 比如 oid， 有（任意）正数。</p></li><li class="list__item" id="addceb38_99"><p>atttypmod atttypmod 元组在创建表的时候 提供的类型相关的数据（比如，一个 varchar 字段的最大长度）。 它传递给类型相关的输入和长度转换函数当做第三个参数。 其值对那些不需要 atttypmod 的类型而言通常为 -1。</p></li><li class="list__item" id="addceb38_100"><p>attnotnull 这代表一个非空约束。我们可以改变这个字段以打开或者关闭这个约束。</p></li><li class="list__item" id="addceb38_101"><p>attisdropped 这个字段已经被删除了，不再有效。</p></li></ul><p id="addceb38_102"><span class="emphasis" id="addceb38_103">注意：</span></p><ol class="list _decimal" id="addceb38_104"  type="1"  ><li class="list__item" id="addceb38_105"><p>如果字段类型为变长类型（如varchar）,那么在atttypmod中存储的长度比实际长度多4。可见<a href="http://blog.163.com/digoal@126/blog/static/163877040201351743331312/" id="addceb38_106"   data-external="true" rel="noopener noreferrer" >参考文档1</a>。</p></li><li class="list__item" id="addceb38_107"><p>如果字段类型为numeric，那么可通过atttypmod获得长度、精度等信息，具体方式可见<a href="http://blog.163.com/digoal@126/blog/static/163877040201371763839672/" id="addceb38_108"   data-external="true" rel="noopener noreferrer" >参考文档2</a>。</p></li></ol><p id="addceb38_109"><span class="control" id="addceb38_110">pg_type</span></p><p id="addceb38_111">记录了数据库有关数据类型的信息。</p><p id="addceb38_112">其中比较重要的字段有：</p><ul class="list _ul" id="addceb38_113"    ><li class="list__item" id="addceb38_114"><p>typname 数据类型名字</p></li><li class="list__item" id="addceb38_115"><p>typlen 对于定长类型，typlen是该类型内部表现形式的字节数目。 对于变长类型，typlen 是负数。 -1 表示一种&quot;变长&quot;类型（有长度字属性的数据）， -2 表示这是一个 NULL 结尾的 C 字串。</p></li></ul><p id="addceb38_116"><span class="control" id="addceb38_117">pg_description</span></p><p id="addceb38_118">记录了数据库中对象（表、字段等）的注释。</p><p id="addceb38_119">其中比较重要的字段有：</p><ul class="list _ul" id="addceb38_120"    ><li class="list__item" id="addceb38_121"><p>objoid 这条描述所描述的对象的 OID。如果这条注释是一个表或表中字段的注释，那么，该值对应于pg_class.oid</p></li><li class="list__item" id="addceb38_122"><p>objsubid 对于一个表字段的注释，它是字段号，对应于pg_attribute.attnum。对于其它对象类型，它是零。</p></li><li class="list__item" id="addceb38_123"><p>description 作为对该对象的描述的任意文本</p></li></ul><p id="addceb38_124"><span class="control" id="addceb38_125">查询用户表</span></p><div class="code-block" data-lang="sql"         >
+SELECT 
+	A.oid,
+	A.relname AS NAME,
+	b.description AS COMMENT 
+FROM
+	pg_class
+	A LEFT OUTER JOIN pg_description b ON b.objsubid = 0 
+	AND A.oid = b.objoid 
+WHERE
+	A.relnamespace = ( SELECT oid FROM pg_namespace WHERE nspname = 'public' ) --用户表一般存储在public模式下
+	AND A.relkind = 'r' 
+ORDER BY
+	A.relname
+</div><p id="addceb38_127"><span class="control" id="addceb38_128">使用表名查询表字段的定义</span></p><div class="code-block" data-lang="sql"         >
+SELECT 
+	A.attnum,
+	A.attname AS field,
+	T.typname AS TYPE,
+	A.attlen AS LENGTH,
+	A.atttypmod AS lengthvar,
+	A.attnotnull AS NOTNULL,
+	b.description AS COMMENT 
+FROM
+	pg_class C,
+	pg_attribute
+	A LEFT OUTER JOIN pg_description b ON A.attrelid = b.objoid 
+	AND A.attnum = b.objsubid,
+	pg_type T 
+WHERE
+	C.relname = 'zc_zclx' 
+	AND A.attnum &gt; 0 
+	AND A.attrelid = C.oid 
+	AND A.atttypid = T.oid 
+ORDER BY
+	A.attnum
+</div><p id="addceb38_130"><span class="control" id="addceb38_131">使用表oid查询表字段的定义</span></p><div class="code-block" data-lang="sql"         >
+SELECT 
+	A.attname AS field,
+	T.typname AS TYPE,
+	A.attlen AS LENGTH,
+	A.atttypmod AS lengthvar,
+	A.attnotnull AS NOTNULL,
+	b.description AS COMMENT 
+FROM
+	pg_attribute
+	A LEFT OUTER JOIN pg_description b ON A.attrelid = b.objoid 
+	AND A.attnum = b.objsubid,
+	pg_type T 
+WHERE
+	A.attnum &gt; 0 
+	AND A.attrelid = 162903 
+	AND A.atttypid = T.oid 
+ORDER BY
+	A.attnum
+</div><p id="addceb38_133"><span class="control" id="addceb38_134">参考文档</span></p><ol class="list _decimal" id="addceb38_135"  type="1"  ><li class="list__item" id="addceb38_136"><p><a href="http://blog.163.com/digoal@126/blog/static/163877040201351743331312/" id="addceb38_137"   data-external="true" rel="noopener noreferrer" >PostgreSQL 9.0 modify pg_attribute.atttypmod extend variable char length avoid rewrite table</a></p></li><li class="list__item" id="addceb38_138"><p><a href="http://blog.163.com/digoal@126/blog/static/163877040201371763839672/" id="addceb38_139"   data-external="true" rel="noopener noreferrer" >PostgreSQL How can i decode the NUMERIC precision and scale in pg_attribute.atttypmod</a></p></li></ol><div class="last-modified"> Last modified: 28 十一月 2023</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom">  <a class="navigation-links__prev" href="postgresql.html">PostgreSQL</a>   <a class="navigation-links__next" href="pgstatement.html">Postgres Statement</a>  </div></article><div id="disqus_thread"></div></div></section></main></div>  <script src="https://resources.jetbrains.com/writerside/apidoc/6.1.5-b176/app.js"></script></body></html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat"><html lang="en-US" data-colors-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8">  <meta name="built-on" content="2023-11-28T23:26:37.6596098"><meta name="build-number" content="${buildNumber}">       <title>设计模式 | Yui</title><script id="virtual-toc-data" type="application/json">[{"id":"example","level":0,"title":"Example","anchor":"#example"}]</script><script id="topic-shortcuts" type="application/json"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.1.5-b176/app.css" rel="stylesheet">   <link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><link rel="manifest" href="https://jetbrains.com/site.webmanifest"><link rel="mask-icon" href="https://jetbrains.com/safari-pinned-tab.svg" color="#000000"><meta name="msapplication-TileColor" content="#000000"/><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"/><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"/><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"/><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"/><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"/>  <meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="设计模式 | Yui"/><meta property="og:description" content=""/><meta property="og:image" content=""/><meta property="og:site_name" content="Yui Help"/><meta property="og:type" content="website"/><meta property="og:locale" content="en_US"/><meta property="og:url" content="designpattern.html"/><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="设计模式 | Yui"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json"> { "@context": "http://schema.org", "@type": "WebPage", "@id": "designpattern.html#webpage", "url": "designpattern.html", "name": "设计模式 | Yui", "description": "", "image": "", "inLanguage":"en-US" }</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json"> { "@type": "WebSite", "@id": "/#website", "url": "/", "name": "Yui Help" }</script><!-- End Schema.org --> <!-- Mermaid light/dark themes -->  <link rel="stylesheet" type="text/css" href="mermaid.css">  </head>     <body data-id="DesignPattern" data-main-title="设计模式" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}"  data-template="article"  data-breadcrumbs="other"  >   <div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Yui  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="DesignPattern"  id="DesignPattern.md"  >设计模式</h1>  <section class="chapter"><h2 id="example" data-toc="example">Example</h2><section class="chapter"><h3 id="ex1" data-toc="ex1">ex1</h3><section class="chapter"><h4 id="4efdf846_12" data-toc="4efdf846_12">接口类，定义</h4><div class="code-block" data-lang="java"         >
+public interface DeductInvalidService {
+    void handleInvalid(JSONArray items);
+    void updateBudget(List&lt;String&gt; businessNos, String businessType);
+}
+</div></section><section class="chapter"><h4 id="4efdf846_14" data-toc="4efdf846_14">抽象类，实现部分共有方法</h4><div class="code-block" data-lang="java"         >
+public abstract class AbstractDeductInvalidService implements DeductInvalidService {
+    @Override
+    public void updateBudget(List&lt;String&gt; businessNos, String businessType) {
+        //logic code
+    }
+}
+</div></section><section class="chapter"><h4 id="4efdf846_16" data-toc="4efdf846_16">具体实现类 若干</h4><div class="code-block" data-lang="java"         >
+@Service(&quot;generateInvalidService&quot;)
+public class GenerateInvalidService extends AbstractDeductInvalidService {
+    @Override
+    public void handleInvalid(JSONArray items) {
+        //logic code
+        super.updateBudget(nos, businessType);
+    }
+}
+</div></section><section class="chapter"><h4 id="4efdf846_18" data-toc="4efdf846_18">使用</h4><div class="code-block" data-lang="java"         >
+@Component
+public class DeductInvalidFactory {
+    @Autowired
+    private ApplicationContext context;
+    private static Map&lt;String, String&gt; map = new HashMap&lt;&gt;();
+    static {
+        map.put(&quot;businessType1&quot;, &quot;generateInvalidService&quot;);
+        map.put(&quot;businessType2&quot;, &quot;generateInvalidService2&quot;);
+        map.put(&quot;businessType3&quot;, &quot;generateInvalidService3&quot;);
+       //etc.
+    }
+    public DeductInvalidService getInvalidHandler(String businessType) {
+        return (DeductInvalidService) context.getBean(map.get(businessType));
+    }
+}
+
+//using in code
+public class UsingExample {
+    public static void main(String[] args) {
+        DeductInvalidService service = deductInvalidFactory.getInvalidHandler(&quot;businessType&quot;);
+        service.handleInvalid(items);
+    } 
+}
+</div></section></section></section><div class="last-modified"> Last modified: 28 十一月 2023</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom">  <a class="navigation-links__prev" href="interviewtop.html">InterviewTop</a>   <a class="navigation-links__next" href="postgresql.html">PostgreSQL</a>  </div></article><div id="disqus_thread"></div></div></section></main></div>  <script src="https://resources.jetbrains.com/writerside/apidoc/6.1.5-b176/app.js"></script></body></html>

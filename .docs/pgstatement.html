@@ -1,0 +1,107 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat"><html lang="en-US" data-colors-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8">  <meta name="built-on" content="2023-11-28T23:26:37.6596098"><meta name="build-number" content="${buildNumber}">       <title>Postgres Statement | Yui</title><script id="virtual-toc-data" type="application/json">[{"id":"system-statement","level":0,"title":"System Statement","anchor":"#system-statement"}]</script><script id="topic-shortcuts" type="application/json"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.1.5-b176/app.css" rel="stylesheet">   <link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><link rel="manifest" href="https://jetbrains.com/site.webmanifest"><link rel="mask-icon" href="https://jetbrains.com/safari-pinned-tab.svg" color="#000000"><meta name="msapplication-TileColor" content="#000000"/><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"/><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"/><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"/><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"/><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"/>  <meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Postgres Statement | Yui"/><meta property="og:description" content=""/><meta property="og:image" content=""/><meta property="og:site_name" content="Yui Help"/><meta property="og:type" content="website"/><meta property="og:locale" content="en_US"/><meta property="og:url" content="pgstatement.html"/><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Postgres Statement | Yui"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json"> { "@context": "http://schema.org", "@type": "WebPage", "@id": "pgstatement.html#webpage", "url": "pgstatement.html", "name": "Postgres Statement | Yui", "description": "", "image": "", "inLanguage":"en-US" }</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json"> { "@type": "WebSite", "@id": "/#website", "url": "/", "name": "Yui Help" }</script><!-- End Schema.org --> <!-- Mermaid light/dark themes -->  <link rel="stylesheet" type="text/css" href="mermaid.css">  </head>     <body data-id="PGStatement" data-main-title="Postgres Statement" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}"  data-template="article"  data-breadcrumbs="sql"  >   <div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Yui  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="PGStatement"  id="PGStatement.md"  >Postgres Statement</h1>  <section class="chapter"><h2 id="system-statement" data-toc="system-statement">System Statement</h2><section class="chapter"><h3 id="f2f48a7a_32" data-toc="f2f48a7a_32">一、查询字段和注释</h3><div class="code-block" data-lang="sql"         >
+SELECT
+	col_description ( A.attrelid, A.attnum ) AS COMMENT,
+	format_type ( A.atttypid, A.atttypmod ) AS TYPE,
+	A.attname AS NAME,
+	A.attnotnull AS NOTNULL 
+FROM
+	pg_class AS C,
+	pg_attribute AS A 
+WHERE
+	C.relname = 'erp_niche' 
+	AND A.attrelid = C.oid 
+	AND A.attnum &gt;0
+	AND A.atttypid &gt; 0
+</div><ul class="list _ul" id="f2f48a7a_34"    ><li class="list__item" id="f2f48a7a_35"><p>A.attnum &gt; 0 过滤标识符 </p><ul class="list _ul" id="f2f48a7a_36"    ><li class="list__item" id="f2f48a7a_37"><p>xid(事务标识符)</p></li><li class="list__item" id="f2f48a7a_38"><p>oid(标识数据库对象，如数据库、库、视图等)</p></li><li class="list__item" id="f2f48a7a_39"><p>cid(命令标识符)</p></li><li class="list__item" id="f2f48a7a_40"><p>tid(行标识符)</p></li></ul></li><li class="list__item" id="f2f48a7a_41"><p>A.atttpid &gt; 0 过滤 ........pg.dropped.xxx........</p></li></ul></section><section class="chapter"><h3 id="sql" data-toc="sql">二、查询正在运行的SQL语句</h3><div class="code-block" data-lang="sql"         >
+SELECT
+	* 
+FROM
+	pg_stat_activity 
+WHERE
+	STATE = 'active'
+</div></section><section class="chapter"><h3 id="f2f48a7a_43" data-toc="f2f48a7a_43">三、查询表的用户权限</h3><div class="code-block" data-lang="sql"         >
+SELECT
+	* 
+FROM
+	information_schema.table_privileges 
+WHERE
+	TABLE_NAME = 'erp_entry'
+</div></section><section class="chapter"><h3 id="f2f48a7a_45" data-toc="f2f48a7a_45">四、查询行名称</h3><div class="code-block" data-lang="sql"         >
+SELECT
+	* 
+FROM
+	information_schema.columns 
+WHERE
+	TABLE_NAME = 'erp_project'
+</div></section><section class="chapter"><h3 id="sql" data-toc="sql">五、终止sql</h3><div class="code-block" data-lang="sql"         >
+select pid, query from pg_stat_activity where state = 'active';
+select pg_terminate_backend(pid);
+</div></section><section class="chapter"><h3 id="schema" data-toc="schema">六、系统Schema</h3><div class="code-block" data-lang="sql"         >
+select * from information_schema.columns --tables
+</div><p id="f2f48a7a_49">七、查看表大小、索引大小</p><div class="code-block" data-lang="sql"         >
+select pg_size_pretty(pg_relation_size('ys_oa_flow_parking_apply_detail'))
+</div><div class="code-block" data-lang="sql"         >
+SELECT 
+	TABLE_NAME,
+	pg_size_pretty ( table_size ) AS table_size,
+	pg_size_pretty ( indexes_size ) AS indexes_size,
+	pg_size_pretty ( total_size ) AS total_size 
+FROM
+	(
+	SELECT 
+		TABLE_NAME,
+		pg_table_size ( TABLE_NAME ) AS table_size,
+		pg_indexes_size ( TABLE_NAME ) AS indexes_size,
+		pg_total_relation_size ( TABLE_NAME ) AS total_size 
+	FROM
+		( SELECT ( '&quot;' || table_schema || '&quot;.&quot;' || TABLE_NAME || '&quot;' ) AS TABLE_NAME FROM information_schema.tables ) AS all_tables 
+	ORDER BY
+		total_size DESC 
+) AS pretty_sizes
+</div></section><section class="chapter"><h3 id="custom-function-example" data-toc="custom-function-example">Custom Function example</h3><section class="chapter"><h4 id="json" data-toc="json">一、处理json</h4><div class="code-block" data-lang="sql"         >
+CREATE OR REPLACE FUNCTION handle_json ( word VARCHAR ) RETURNS VARCHAR AS $body$ DECLARE
+	ret VARCHAR;
+BEGIN
+	ret := word;
+	ret = REPLACE ( ret, '&quot;', '' );
+	ret = REPLACE ( ret, '[', '' );
+	ret = REPLACE ( ret, ']', '' );
+	ret = REPLACE ( ret, 'null', '' );
+	IF
+		ret = '' THEN
+			RETURN NULL;
+	END IF;
+	RETURN ret;
+END;
+$body$ LANGUAGE plpgsql;
+</div><div class="code-block" data-lang="sql"         >
+SELECT
+	project_type :: json -&gt; 'traditionalType',
+	project_type,
+	handle_json ( ( project_type :: json -&gt; 'traditionalType' ) :: VARCHAR ) 
+FROM
+	&quot;erp_supplier_team&quot; 
+WHERE
+	project_type != '' 
+	AND company_no = '10';
+</div></section><section class="chapter"><h4 id="f2f48a7a_55" data-toc="f2f48a7a_55">二、遍历表匹配某字段</h4><div class="code-block" data-lang="sql"         >
+CREATE 
+	OR REPLACE FUNCTION som_f ( _tb1 regclass, field VARCHAR, val VARCHAR ) RETURNS VARCHAR AS $func$ DECLARE
+	ret VARCHAR;
+BEGIN
+	EXECUTE format ( 'select (EXISTS (select 1 from %s where %s = ''%s''))', _tb1, field, val ) INTO ret;
+	RETURN ret;
+END;
+$func$ LANGUAGE plpgsql;
+</div><div class="code-block" data-lang="sql"         >
+SELECT
+	p1.relname,
+	som_f ( p1.oid, 'project_no', 'Asg19115' ) 
+FROM
+	pg_class p1
+	JOIN pg_attribute p2 ON p1.oid = p2.attrelid 
+WHERE
+	p1.relkind = 'r' 
+	AND p2.attnum &gt; 0 
+	AND p2.attname = 'project_no'
+</div></section></section></section><div class="last-modified"> Last modified: 28 十一月 2023</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom">  <a class="navigation-links__prev" href="pgsystemtable.html">常用系统表</a>   <a class="navigation-links__next" href="pgfunction.html">常用函数列表</a>  </div></article><div id="disqus_thread"></div></div></section></main></div>  <script src="https://resources.jetbrains.com/writerside/apidoc/6.1.5-b176/app.js"></script></body></html>

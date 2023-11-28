@@ -1,0 +1,69 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat"><html lang="en-US" data-colors-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8">  <meta name="built-on" content="2023-11-28T23:26:37.8157516"><meta name="build-number" content="${buildNumber}">       <title>JavaFx打包 | Yui</title><script id="virtual-toc-data" type="application/json">[{"id":"springboot-javafx","level":0,"title":"SpringBoot + JavaFx 实现","anchor":"#springboot-javafx"},{"id":"javafxpackager","level":0,"title":"javafxpackager","anchor":"#javafxpackager"},{"id":"javafx-maven-plugin","level":0,"title":"javafx-maven-plugin","anchor":"#javafx-maven-plugin"},{"id":"maven-assembly-plugin","level":0,"title":"maven-assembly-plugin","anchor":"#maven-assembly-plugin"},{"id":"exe4j","level":0,"title":"exe4j","anchor":"#exe4j"},{"id":"idea","level":0,"title":"idea","anchor":"#idea"},{"id":"de907f56_135","level":0,"title":"其他","anchor":"#de907f56_135"}]</script><script id="topic-shortcuts" type="application/json"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.1.5-b176/app.css" rel="stylesheet">   <link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><link rel="manifest" href="https://jetbrains.com/site.webmanifest"><link rel="mask-icon" href="https://jetbrains.com/safari-pinned-tab.svg" color="#000000"><meta name="msapplication-TileColor" content="#000000"/><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"/><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"/><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"/><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"/><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"/>  <meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="JavaFx打包 | Yui"/><meta property="og:description" content=""/><meta property="og:image" content=""/><meta property="og:site_name" content="Yui Help"/><meta property="og:type" content="website"/><meta property="og:locale" content="en_US"/><meta property="og:url" content="javafxpackage.html"/><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="JavaFx打包 | Yui"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json"> { "@context": "http://schema.org", "@type": "WebPage", "@id": "javafxpackage.html#webpage", "url": "javafxpackage.html", "name": "JavaFx打包 | Yui", "description": "", "image": "", "inLanguage":"en-US" }</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json"> { "@type": "WebSite", "@id": "/#website", "url": "/", "name": "Yui Help" }</script><!-- End Schema.org --> <!-- Mermaid light/dark themes -->  <link rel="stylesheet" type="text/css" href="mermaid.css">  </head>     <body data-id="JavaFxPackage" data-main-title="JavaFx打包" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}"  data-template="article"  data-breadcrumbs="article"  >   <div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Yui  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="JavaFxPackage"  id="JavaFxPackage.md"  >JavaFx打包</h1>  <section class="chapter"><h2 id="springboot-javafx" data-toc="springboot-javafx">SpringBoot + JavaFx 实现</h2><p id="de907f56_74">Spring启动类</p><div class="code-block" data-lang="java"         >
+@SpringBootApplication
+public class BootStrapApplication implements CommandLineRunner {
+
+    public static void main(String[] args) {
+        ConfigurableApplicationContext ctx = SpringApplication.run(BootStrapApplication.class, args);
+            ctx.close();
+    }
+
+    @Override
+    public void run(String... args) {
+        // start java fx
+        Application.launch(JavaFxApp.class, args);
+    }
+}
+</div></section><section class="chapter"><h2 id="javafxpackager" data-toc="javafxpackager">javafxpackager</h2><aside class="prompt" data-type="tip" data-title="" id="de907f56_76"><p id="de907f56_77">JavaFx提供的打包工具，从jdk1.7就包含这个工具了，该命令既可以打包成jar也可以打包成exe</p></aside><section class="chapter"><h3 id="jar" data-toc="jar">打包成jar</h3><div class="code-block" data-lang="none"         >
+javafxpackager -createjar -appclass your.app.xxx -srcdir classes -outdir archive -out file Test.jar
+</div></section><section class="chapter"><h3 id="exe" data-toc="exe">打包成exe</h3><div class="code-block" data-lang="none"         >
+javafxpackager -deploy -appclass your.app.xxx -native image -srcdir app -outdir deploy -outfile Test
+</div></section><section class="chapter"><h3 id="de907f56_80" data-toc="de907f56_80">说明</h3><ol class="list _decimal" id="de907f56_81"  type="1"  ><li class="list__item" id="de907f56_82"><p>appclass 指定应用程序主类</p></li><li class="list__item" id="de907f56_83"><p>srcdir 指定存放jar文件的目录</p></li><li class="list__item" id="de907f56_84"><p>native image 指定输出的本地程序类型，image只生成一个启动器</p></li><li class="list__item" id="de907f56_85"><p>用该方法打包maven构建的项目，依赖的很多jar包都不会被打包进来</p></li></ol></section></section><section class="chapter"><h2 id="javafx-maven-plugin" data-toc="javafx-maven-plugin">javafx-maven-plugin</h2><aside class="prompt" data-type="tip" data-title="" id="de907f56_86"><p id="de907f56_87">com.zenjava.javafx-maven-plugin</p><p id="de907f56_88">实践版本 Java 1.8.0_251 ；Maven 3.6.3</p></aside><section class="chapter"><h3 id="de907f56_89" data-toc="de907f56_89">版本要求</h3><ul class="list _ul" id="de907f56_90"    ><li class="list__item" id="de907f56_91"><p>Maven 3.5 (older versions might work too)</p></li><li class="list__item" id="de907f56_92"><p>Java Developer Kit 8 with at least Update 40 (does <span class="control" id="de907f56_93">NOT</span> support JKD9 or later yet)</p></li></ul></section><section class="chapter"><h3 id="de907f56_94" data-toc="de907f56_94">配置说明</h3><div class="code-block" data-lang="markup"         >
+&lt;plugin&gt;
+    &lt;groupId&gt;com.zenjava&lt;/groupId&gt;
+    &lt;artifactId&gt;javafx-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;8.8.3&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;!--指定打包出来的应用名--&gt;
+        &lt;appName&gt;appName&lt;/appName&gt;
+        &lt;!--应用程序的供应商，在Bundles安装时候需要--&gt;
+        &lt;vendor&gt;yui&lt;/vendor&gt;
+        &lt;!--入口类--&gt;
+        &lt;mainClass&gt;your.app.MainClass&lt;/mainClass&gt;
+        &lt;!--JAVA启动参数--&gt;
+        &lt;runJavaParameter&gt;
+            -Xms50m -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=20
+        &lt;/runJavaParameter&gt;
+        &lt;!--APP启动参数 For MavenPlugins jfx:run--&gt;
+        &lt;runAppParameter&gt;--spring.profiles.active=prod --file.encoding=UTF-8
+        &lt;/runAppParameter&gt;
+        &lt;!--native启动参数 For MavenPlugins jfx:native--&gt;
+        &lt;launcherArguments&gt;--spring.profiles.active=prod --file.encoding=UTF-8
+        &lt;/launcherArguments&gt;
+        &lt;!--默认目录${project.basedir}/src/main/deploy--&gt;
+        &lt;deployDir&gt;${project.basedir}/src/main/deploy&lt;/deployDir&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</div></section><section class="chapter"><h3 id="de907f56_96" data-toc="de907f56_96">命令说明</h3><section class="chapter"><h4 id="jfx-jar" data-toc="jfx-jar">jfx:jar</h4><ol class="list _decimal" id="de907f56_97"  type="1"  ><li class="list__item" id="de907f56_98"><p>代码打包成jar包，依赖打包到目录lib下</p></li><li class="list__item" id="de907f56_99"><p>正常启动 (<span class="control" id="de907f56_100">java - jar xxx.jar</span> )，会报错缺少依赖文件</p></li><li class="list__item" id="de907f56_101"><p>解决方案（个人看法，没找到解决方案） </p><ol class="list _decimal" id="de907f56_102"  type="1"  ><li class="list__item" id="de907f56_103"><p>将所有依赖加入启动参数，使用start.bat启动</p></li><li class="list__item" id="de907f56_104"><p>将所有依赖和代码打成一个包 jar-with-all-dependencies.jar</p></li></ol></li></ol></section><section class="chapter"><h4 id="jfx-native" data-toc="jfx-native">jfx:native采用方案</h4><ol class="list _decimal" id="de907f56_105"  type="1"  ><li class="list__item" id="de907f56_106"><p id="de907f56_107"><span class="control" id="de907f56_108">jfx:build-native</span>: 只重新构建native(target/jfx/native)，需要已构建jar (target/jfx/app)</p></li><li class="list__item" id="de907f56_109"><p id="de907f56_110"><span class="control" id="de907f56_111">jfx:native</span>: 重新构建jar和native</p></li><li class="list__item" id="de907f56_112"><p id="de907f56_113">个人看法：流程是生成调用jar包的exe，运行exe启动程序。</p></li></ol><section class="chapter"><h5 id="de907f56_114" data-toc="de907f56_114">如何修改程序图标？</h5><p id="de907f56_115">图标所在目录： <span class="control" id="de907f56_116">src/main/deploy/package/windows/your-app-name.ico</span> （与deployDir相关）</p></section></section><section class="chapter"><h4 id="jfx-run" data-toc="jfx-run">jfx:run</h4><p id="de907f56_117">com.zenjava:javafx-maven-plugin:8.8.3:run 运行调试</p></section><section class="chapter"><h4 id="jfx-web" data-toc="jfx-web">jfx:web</h4><p id="de907f56_118">需要<span class="control" id="de907f56_119">jnlp</span></p></section><section class="chapter"><h4 id="jfx-keystore" data-toc="jfx-keystore">jfx:keystore</h4><aside class="prompt" data-type="tip" data-title="" id="de907f56_120"><p id="de907f56_121">There's nothing yet.</p></aside></section></section></section><section class="chapter"><h2 id="maven-assembly-plugin" data-toc="maven-assembly-plugin">maven-assembly-plugin</h2><p id="de907f56_122">生成jar包两种方式</p><ol class="list _decimal" id="de907f56_123"  type="1"  ><li class="list__item" id="de907f56_124"><p>打包项目依赖的所有jar生成单个jar包</p></li><li class="list__item" id="de907f56_125"><p>生成jar包，复制所需的jar包到lib目录</p></li></ol><p id="de907f56_126">第一种方式较好，第二种方式会出现 <span class="control" id="de907f56_127">Caused by: java.lang.NoClassDefFoundError</span>错误</p><div class="code-block" data-lang="markup"         >
+&lt;plugin&gt;
+    &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;
+    &lt;configuration&gt;
+        &lt;descriptorRefs&gt;
+            &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;
+        &lt;/descriptorRefs&gt;
+        &lt;archive&gt;
+            &lt;manifest&gt;
+                &lt;mainClass&gt;your.app.xxx&lt;/mainClass&gt;
+            &lt;/manifest&gt;
+        &lt;/archive&gt;
+    &lt;/configuration&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;id&gt;make-assembly&lt;/id&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;single&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+&lt;/plugin&gt;
+</div></section><section class="chapter"><h2 id="exe4j" data-toc="exe4j">exe4j</h2><p id="de907f56_129"><a href="https://www.freesion.com/article/9830721030/" id="de907f56_130"   data-external="true" rel="noopener noreferrer" >参照链接：JAVAFX打包JAR成EXE</a></p></section><section class="chapter"><h2 id="idea" data-toc="idea">idea</h2><figure  id="de907f56_131"><img alt="img" title="img" src="images/20190211142608269.png"  class="" width="426" height="909"/></figure><figure  id="de907f56_132"><img alt="img" title="img" src="images/20190211142748443.png"  class="" width="1860" height="1375"/></figure><figure  id="de907f56_133"><img alt="img" title="img" src="images/20190211142829884.png"  class="" width="467" height="352"/></figure><figure  id="de907f56_134"><img alt="img" title="img" src="images/20190211142908165.png"  class="" width="356" height="271"/></figure></section><section class="chapter"><h2 id="de907f56_135" data-toc="de907f56_135">其他</h2><ol class="list _decimal" id="de907f56_136"  type="1"  ><li class="list__item" id="de907f56_137"><p><a href="https://blog.csdn.net/wangpaiblog/article/details/122850438" id="de907f56_138"   data-external="true" rel="noopener noreferrer" >GraalVM</a></p><ol class="list _decimal" id="de907f56_139"  type="1"  ><li class="list__item" id="de907f56_140"><p><a href="https://docs.gluonhq.com/#_resourceslist" id="de907f56_141"   data-external="true" rel="noopener noreferrer" >gluonfx官网</a></p></li></ol></li><li class="list__item" id="de907f56_142"><p><a href="https://www.cnblogs.com/xl4ng/p/17674096.html" id="de907f56_143"   data-external="true" rel="noopener noreferrer" >jdk17 + openjfx</a></p></li></ol></section><div class="last-modified"> Last modified: 28 十一月 2023</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom">  <a class="navigation-links__prev" href="common.html">常见算法</a>   <a class="navigation-links__next" href="spring.html">Spring</a>  </div></article><div id="disqus_thread"></div></div></section></main></div>  <script src="https://resources.jetbrains.com/writerside/apidoc/6.1.5-b176/app.js"></script></body></html>

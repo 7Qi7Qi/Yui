@@ -1,0 +1,38 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat"><html lang="en-US" data-colors-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8">  <meta name="built-on" content="2023-11-28T23:26:37.9370508"><meta name="build-number" content="${buildNumber}">       <title>OAuth | Yui</title><script id="virtual-toc-data" type="application/json">[{"id":"demo","level":0,"title":"DEMO","anchor":"#demo"}]</script><script id="topic-shortcuts" type="application/json"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.1.5-b176/app.css" rel="stylesheet">   <link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><link rel="manifest" href="https://jetbrains.com/site.webmanifest"><link rel="mask-icon" href="https://jetbrains.com/safari-pinned-tab.svg" color="#000000"><meta name="msapplication-TileColor" content="#000000"/><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"/><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"/><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"/><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"/><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"/>  <meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="OAuth | Yui"/><meta property="og:description" content=""/><meta property="og:image" content=""/><meta property="og:site_name" content="Yui Help"/><meta property="og:type" content="website"/><meta property="og:locale" content="en_US"/><meta property="og:url" content="other.html"/><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="OAuth | Yui"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json"> { "@context": "http://schema.org", "@type": "WebPage", "@id": "other.html#webpage", "url": "other.html", "name": "OAuth | Yui", "description": "", "image": "", "inLanguage":"en-US" }</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json"> { "@type": "WebSite", "@id": "/#website", "url": "/", "name": "Yui Help" }</script><!-- End Schema.org --> <!-- Mermaid light/dark themes -->  <link rel="stylesheet" type="text/css" href="mermaid.css">  </head>     <body data-id="Other" data-main-title="OAuth" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}"  data-template="article"  data-breadcrumbs="framework"  >   <div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Yui  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Other"  id="Other.md"  >OAuth</h1>  <ol class="list _decimal" id="cb8f8ba_17"  type="1"  ><li class="list__item" id="cb8f8ba_18"><p>申请<code class="code" id="cb8f8ba_19">client_id</code>和<code class="code" id="cb8f8ba_20">client_secret</code></p></li><li class="list__item" id="cb8f8ba_21"><p>构建获取code的url (请求授权码) https://xxx.yyy.com/oauth-server/authorize?client_id=%s&amp;response_type=code&amp;redirect_uri=%s</p></li><li class="list__item" id="cb8f8ba_22"><p>在浏览器访问这个url </p><ol class="list _decimal" id="cb8f8ba_23"  type="1"  ><li class="list__item" id="cb8f8ba_24"><p>未登录：跳转到sso平台。请求授权登录</p></li><li class="list__item" id="cb8f8ba_25"><p>已登录：直接进入回调url</p></li></ol></li><li class="list__item" id="cb8f8ba_26"><p>根据授权code获取accessToken (请求令牌) http://xxx.yyy.com/oauth-server/accessToken?client_id=CLIENT_ID&amp;client_secret=SECRIT&amp;grant_type=authorization_code&amp;code=CODE&amp;redirect_uri=REDIRECT_URI</p></li><li class="list__item" id="cb8f8ba_27"><p>用accessToken获取userInfo https://xxx.yyy.com/oauth-server/userInfo?access_token=af9593e86f1d7d7618609a128749e6fe&amp;code=e1b7c90a767b5900084a79b9aec11259</p></li></ol><figure  id="cb8f8ba_28"><img alt="oauth" title="oauth" src="images/oauth.jpg"  class="" width="800" height="450"/></figure><section class="chapter"><h2 id="demo" data-toc="demo">DEMO</h2><div class="code-block" data-lang="java"         >
+public class Demo {
+    @RequestMapping(value=&quot;codeCallback&quot;, method=RequestMethod.GET)
+   public void codeCallback(HttpServletRequest request, HttpServletResponse response) {
+        //回调中获取code
+       String code = request.getParameter(&quot;code&quot;);
+       ///构建获取accessToken的URL
+       Map&lt;String,String&gt; headers = new HashMap&lt;&gt;();
+       headers.put(&quot;Content-Type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+
+       Map res =  doPost(
+               &quot;https://xxx.yyy.com/oauth-server/accessToken?&quot; +
+                       &quot;client_id=&quot;+clientId+&quot;&amp;&quot; +
+                       &quot;client_secret=&quot;+clientSecret+&quot;&amp;&quot; +
+                       &quot;grant_type=authorization_code&amp;&quot; +
+                       &quot;code=&quot;+code+&quot;&amp;&quot; +
+                       &quot;redirect_uri=REDIRECT_URI&quot;,
+               headers
+       );
+       //拿到access_token 和 expires_time过期时间
+       String accessToken = res.getString(&quot;access_token&quot;);
+       Integer expiresTime = res.getInteger(&quot;expires_time&quot;);
+
+       //拿到access_token后 构建获取用户信息的URL
+       String res2 =  doPost(
+               &quot;https://xxx.yyy.com/oauth-server/userInfo?&quot; +
+                       &quot;access_token=&quot;+accessToken+&quot;&amp;&quot; +
+                       &quot;code=&quot;+code,
+               headers
+       );
+       String userId = res2.getString(&quot;userId&quot;);
+       String userName = res2.getString(&quot;userName&quot;);
+       String headImg = res2.getString(&quot;headImg&quot;);
+
+       //获取到这些信息后 可以跳转回自己的首页
+    }
+}
+</div></section><div class="last-modified"> Last modified: 28 十一月 2023</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom">  <a class="navigation-links__prev" href="redis.html">Redis</a>   <a class="navigation-links__next" href="netty.html">Netty</a>  </div></article><div id="disqus_thread"></div></div></section></main></div>  <script src="https://resources.jetbrains.com/writerside/apidoc/6.1.5-b176/app.js"></script></body></html>
